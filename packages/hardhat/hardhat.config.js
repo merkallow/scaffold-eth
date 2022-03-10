@@ -1,3 +1,17 @@
+/* eslint-disable no-throw-literal */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-undef */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable camelcase */
+/* eslint-disable no-shadow */
+/* eslint-disable global-require */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable new-cap */
+/* eslint-disable consistent-return */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-underscore-dangle */
 require("dotenv").config();
 const { utils } = require("ethers");
 const fs = require("fs");
@@ -11,6 +25,8 @@ require("hardhat-gas-reporter");
 
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-etherscan");
+
+require('solidity-coverage');
 
 const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 
@@ -64,6 +80,11 @@ module.exports = {
   // Follow the directions, and uncomment the network you wish to deploy to.
 
   networks: {
+    // Use this network to get console.logs to show up in the test output in when running tests
+    // npx hardhat --network hardhat test
+    hardhat: {
+      chainId: 31337,
+    },
     localhost: {
       url: "http://localhost:8545",
       /*      
@@ -267,7 +288,7 @@ module.exports = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 200,
+            runs: 10,
           },
         },
       },
@@ -276,7 +297,7 @@ module.exports = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 200,
+            runs: 10,
           },
         },
       },
@@ -416,7 +437,7 @@ task(
     const hdkey = require("ethereumjs-wallet/hdkey");
 
     let mnemonic = "";
-    while (contract_address.indexOf(taskArgs.searchFor) != 0) {
+    while (contract_address.indexOf(taskArgs.searchFor) !== 0) {
       mnemonic = bip39.generateMnemonic();
       if (DEBUG) console.log("mnemonic", mnemonic);
       const seed = await bip39.mnemonicToSeed(mnemonic);
