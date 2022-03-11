@@ -11,13 +11,14 @@ import "./LoogDev.sol";
 import "./LoogFinancial.sol";
 import "./LoogOwnership.sol";
 import "./LoogPublicSale.sol";
+import "./LoogTokenURI.sol";
 import "./ERC721A.sol";
 
 /**
 This is the "top level" contract. It initializes each of its components in the constructor. It also contains
 all of the public interfaces to the ERC721A contract that needs them.
  */
-contract Loog is LoogAllowList, LoogDev, LoogFinancial, LoogOwnership, LoogPublicSale {
+contract Loog is LoogAllowList, LoogDev, LoogFinancial, LoogOwnership, LoogPublicSale, LoogTokenURI {
 
   // metadata URI
   string private _baseTokenURI;
@@ -38,6 +39,27 @@ contract Loog is LoogAllowList, LoogDev, LoogFinancial, LoogOwnership, LoogPubli
 
   function setBaseURI(string calldata baseURI) external onlyOwner {
     _baseTokenURI = baseURI;
+  }
+
+  /**
+   * @dev See {IERC721Metadata-tokenURI}.
+   */
+  function tokenURI(uint256 tokenId)
+    public
+    view
+    virtual
+    override
+    returns (string memory)
+  {
+    require(
+      _exists(tokenId),
+      "ERC721Metadata: URI query for nonexistent token"
+    );
+
+    console.log("tokenId=%s", tokenId);
+
+    return loogTokenURI(tokenId);
+
   }
 
 }
