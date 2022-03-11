@@ -2,6 +2,10 @@
 
 const { ethers } = require("hardhat");
 
+const MAX_BATCH_SIZE = 5;
+const COLLECTION_SIZE = 10000;
+const AMOUNT_FOR_DEVS = 200;
+
 const localChainId = "31337";
 
 // const sleep = (ms) =>
@@ -17,8 +21,9 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deployer } = await getNamedAccounts();
   const chainId = await getChainId();
 
-  await deploy("YourContract", {
+  await deploy("Loog", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
+    args: [MAX_BATCH_SIZE, COLLECTION_SIZE, AMOUNT_FOR_DEVS],
     from: deployer,
     // args: [ "Hello", ethers.utils.parseEther("1.5") ],
     log: true,
@@ -26,7 +31,7 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   });
 
   // Getting a previously deployed contract
-  const YourContract = await ethers.getContract("YourContract", deployer);
+  const loog = await ethers.getContract("Loog", deployer);
   /*  await YourContract.setPurpose("Hello");
   
     To take ownership of yourContract using the ownable library uncomment next line and add the 
