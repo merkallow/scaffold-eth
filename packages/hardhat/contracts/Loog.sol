@@ -20,9 +20,6 @@ all of the public interfaces to the ERC721A contract that needs them.
  */
 contract Loog is LoogAllowList, LoogDev, LoogFinancial, LoogOwnership, LoogPublicSale, LoogTokenURI {
 
-  // metadata URI
-  string private _baseTokenURI;
-
   constructor(
     uint256 maxBatchSize_,
     uint256 collectionSize_,
@@ -31,14 +28,6 @@ contract Loog is LoogAllowList, LoogDev, LoogFinancial, LoogOwnership, LoogPubli
   LoogDev(devTokens_)
   ERC721A("Loog", "LOOG", maxBatchSize_, collectionSize_)
   {
-  }
-
-  function _baseURI() internal view virtual override returns (string memory) {
-    return _baseTokenURI;
-  }
-
-  function setBaseURI(string calldata baseURI) external onlyOwner {
-    _baseTokenURI = baseURI;
   }
 
   /**
@@ -55,8 +44,6 @@ contract Loog is LoogAllowList, LoogDev, LoogFinancial, LoogOwnership, LoogPubli
       _exists(tokenId),
       "ERC721Metadata: URI query for nonexistent token"
     );
-
-    console.log("tokenId=%s", tokenId);
 
     return loogTokenURI(tokenId);
 

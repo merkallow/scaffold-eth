@@ -46,16 +46,9 @@ describe("Loog", function () {
       expect(supply).gt(0);
     });
 
-    it("tokenURI is always an empty string before setBaseURI is called", async function () {
+    it("tokenURI length is > 0", async function () {
       const uri = await this.loog.tokenURI(0);
-      expect(uri).to.be.equal("");
-    });
-
-    it("tokenURI is 'baseURI + token number once setBaseURI is called", async function () {
-      const baseURI = "http://ipfs/bla/";
-      await this.loog.setBaseURI(baseURI);
-      const uri = await this.loog.tokenURI(0);
-      expect(uri).to.be.equal(baseURI + "0");
+      expect(uri.length).to.be.greaterThan(0);
     });
   });
 });
