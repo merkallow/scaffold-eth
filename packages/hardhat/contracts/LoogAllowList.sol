@@ -15,7 +15,7 @@ error AllowListSeedError();
 
 abstract contract LoogAllowList is Ownable, LoogBase {
 
-  uint256 private constant ALLOW_LIST_MAX_MINT = 1;
+  uint256 private constant ALLOW_LIST_MAX_MINT = 5;
 
   uint256 public _allowListPrice;
   bytes32 private _allowListRoot;
