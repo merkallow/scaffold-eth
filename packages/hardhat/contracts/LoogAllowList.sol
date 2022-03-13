@@ -19,6 +19,7 @@ abstract contract LoogAllowList is Ownable, LoogBase {
 
   uint256 public _allowListPrice;
   bytes32 private _allowListRoot;
+  string public _allowListCid;
 
   mapping(address => uint256) private _allowListClaimed;
 
@@ -44,9 +45,10 @@ abstract contract LoogAllowList is Ownable, LoogBase {
     refundIfOver(_allowListPrice * quantity);
   }
 
-  function enableAllowList(uint256 allowListPrice_, bytes32 allowListRoot_) public onlyOwner {
+  function enableAllowList(uint256 allowListPrice_, bytes32 allowListRoot_, string memory allowListCid_) public onlyOwner {
     _allowListPrice = allowListPrice_;
     _allowListRoot = allowListRoot_;
+    _allowListCid = allowListCid_;
   }
 
 }

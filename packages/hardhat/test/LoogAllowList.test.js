@@ -11,6 +11,8 @@ const MAX_BATCH_SIZE = 5;
 const COLLECTION_SIZE = 10000;
 const AMOUNT_FOR_DEVS = 200;
 const ALLOW_LIST_PRICE = ethers.utils.parseEther("0.095");
+const ALLOW_LIST_CID =
+  "bafkreiedlq5amj4hatlwbhldkkjfrfaxxzlpax464hbhutrohpiji4ixji";
 
 describe("LoogAllowList", function () {
   beforeEach(async function () {
@@ -41,14 +43,19 @@ describe("LoogAllowList", function () {
         await expect(
           this.loog
             .connect(this.allowListSigners[0])
-            .enableAllowList(ALLOW_LIST_PRICE, this.merkleTree.getRoot())
+            .enableAllowList(
+              ALLOW_LIST_PRICE,
+              this.merkleTree.getRoot(),
+              ALLOW_LIST_CID
+            )
         ).to.be.revertedWith("Ownable: caller is not the owner");
       });
 
       it("owner can enable allow list", async function () {
         await this.loog.enableAllowList(
           ALLOW_LIST_PRICE,
-          this.merkleTree.getRoot()
+          this.merkleTree.getRoot(),
+          ALLOW_LIST_CID
         );
         expect(await this.loog._allowListPrice()).to.equal(ALLOW_LIST_PRICE);
       });
@@ -73,7 +80,8 @@ describe("LoogAllowList", function () {
     this.beforeEach(async function () {
       await this.loog.enableAllowList(
         ALLOW_LIST_PRICE,
-        this.merkleTree.getRoot()
+        this.merkleTree.getRoot(),
+        ALLOW_LIST_CID
       );
     });
 
